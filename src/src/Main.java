@@ -7,7 +7,7 @@ public class Main {
     static int SIZE = 1024;
     static int SEED = 6834723;
     static int RUNS = 20;
-    static int NUM_THREADS = 2;
+    static int NUM_THREADS = 16;
 
     public static void main(String[] args) {
         for (int j = 0; j < 7; j++) {
@@ -15,7 +15,7 @@ public class Main {
 
             for (int i = 0; i < RUNS; i++) {
                 double startTime = System.currentTimeMillis();
-                forkJoinImplementation();
+                concurrencyApiImplementation();
                 double endTime = System.currentTimeMillis();
                 executionTimes[i] = endTime - startTime;
             }
@@ -43,7 +43,7 @@ public class Main {
                 for (k=0; k<SIZE; k=k+1)
                     C[i][j] = C[i][j] + A[i][k] * B[k][j];
 
-        System.out.println("Fin: " + C[0][0]);
+        // System.out.println("Fin: " + C[0][0]);
     }
 
     public static void concurrencyApiImplementation() {
@@ -83,7 +83,7 @@ public class Main {
         }
         executor.shutdown();
 
-        System.out.println("Fin: " + C[0][0]);
+        // System.out.println("Fin: " + C[0][0]);
     }
 
     public static void forkJoinImplementation() {
@@ -104,7 +104,7 @@ public class Main {
         pool.invoke(new MatrixMultiplyTask(A, B, C, 0, SIZE));
         pool.shutdown();
 
-        System.out.println("Fin: " + C[0][0]);
+        // System.out.println("Fin: " + C[0][0]);
     }
 
     public static double calculateMean(double[] numbers) {
